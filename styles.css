@@ -1,0 +1,590 @@
+/* ==========================================================================
+   ЖҰЛДЫЗДЫ ТАҢДАУ — 16:9 Бір Экрандық Стилистика (Zero Lag, No Scroll)
+   ========================================================================== */
+
+:root {
+  --gold-grad: radial-gradient(circle at 45% 35%, #ffffff 0%, #fff176 25%, #ffd600 60%, #ff8f00 100%);
+  --star-shadow: 0 4px 18px rgba(255, 193, 7, 0.55), 0 2px 8px rgba(0, 0, 0, 0.6);
+  --cyan-accent: #00e5ff;
+  --green-btn: linear-gradient(135deg, #00e676 0%, #00b0ff 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden; /* Ноутбук экранынан төмен түспеу үшін (No Scroll) */
+  background: #060814;
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  color: #ffffff;
+  user-select: none;
+}
+
+/* ==========================================================================
+   ULTRA-LIGHT COSMIC BACKGROUND (Zero CPU lag, pure GPU)
+   ========================================================================== */
+.cosmos-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, #15193c 0%, #0a0d22 55%, #04050d 100%);
+  pointer-events: none;
+}
+
+.nebula-glow {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(0, 229, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 214, 0, 0.09) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(124, 77, 255, 0.07) 0%, transparent 60%);
+}
+
+/* Static crisp stars via CSS box-shadow (0ms render overhead) */
+.stars-layer-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  box-shadow:
+    5vw 8vh #fff, 12vw 35vh rgba(255,255,255,0.7), 18vw 72vh #fff, 25vw 15vh rgba(255,255,255,0.8),
+    32vw 88vh #fff, 40vw 42vh rgba(255,255,255,0.5), 48vw 12vh #fff, 55vw 68vh rgba(255,255,255,0.8),
+    63vw 28vh #fff, 71vw 82vh rgba(255,255,255,0.6), 78vw 19vh #fff, 86vw 53vh rgba(255,255,255,0.8),
+    93vw 91vh #fff, 9vw 90vh rgba(255,255,255,0.5), 88vw 12vh #fff, 38vw 95vh rgba(255,255,255,0.7);
+  animation: subtleTwinkle 4s infinite alternate ease-in-out;
+}
+
+.stars-layer-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  box-shadow:
+    8vw 20vh #ffd54f, 22vw 50vh #80d8ff, 35vw 25vh #ffd54f, 52vw 78vh #fff,
+    67vw 15vh #80d8ff, 82vw 62vh #ffd54f, 91vw 38vh #fff, 15vw 80vh #ffd54f,
+    45vw 60vh #80d8ff, 75vw 45vh #ffd54f;
+  animation: subtleTwinkle 5s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes subtleTwinkle {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* ==========================================================================
+   APP LAYOUT (16:9 Viewport Fitting)
+   ========================================================================== */
+.app-layout {
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 18px 10px;
+}
+
+/* Top Bar: Compact, clean, 48px height */
+.top-bar {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(16, 20, 48, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 215, 0, 0.22);
+  border-radius: 14px;
+  padding: 0 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+
+.bar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-star {
+  font-size: 1.3rem;
+  filter: drop-shadow(0 0 6px gold);
+}
+
+.brand-name {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #ffd600, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.counter-badge {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.84rem;
+  color: #ffecb3;
+}
+
+.counter-badge strong {
+  font-size: 1.15rem;
+  color: #ffd600;
+  font-weight: 900;
+}
+
+.total-span {
+  font-size: 0.8rem;
+  color: #b0bec5;
+}
+
+.bar-center {
+  display: flex;
+  align-items: center;
+}
+
+.turn-prompt {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #80d8ff;
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 4px 16px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+
+.bar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.18s ease;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.nav-btn.icon-only {
+  padding: 6px 10px;
+  font-size: 1rem;
+}
+
+.reset-btn {
+  background: rgba(255, 75, 114, 0.18);
+  border-color: rgba(255, 75, 114, 0.4);
+  color: #ff8ca3;
+}
+
+.reset-btn:hover {
+  background: rgba(255, 75, 114, 0.35);
+  color: #ffffff;
+}
+
+.badge {
+  background: #ffd600;
+  color: #0c0f24;
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 1px 6px;
+  border-radius: 12px;
+}
+
+/* ==========================================================================
+   GRID CONTAINER (Strictly 5 Columns x 4 Rows in 16:9 Viewport)
+   ========================================================================== */
+.grid-container {
+  flex: 1;
+  width: 100%;
+  height: calc(100vh - 66px);
+  max-height: calc(100vh - 66px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0;
+}
+
+.stars-fixed-grid {
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: clamp(6px, 1.3vh, 18px) clamp(10px, 1.8vw, 28px);
+}
+
+/* Individual Star Cell */
+.star-cell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  will-change: transform, opacity;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.star-cell:hover:not(.picked) {
+  transform: scale(1.12);
+  z-index: 10;
+}
+
+.star-cell:active:not(.picked) {
+  transform: scale(0.96);
+}
+
+/* Star SVG Element */
+.star-svg-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: clamp(75px, 17vh, 135px);
+  max-height: clamp(75px, 17vh, 135px);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.star-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 10px rgba(255, 214, 0, 0.45));
+  transition: filter 0.22s ease;
+}
+
+.star-cell:hover .star-svg {
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 214, 0, 0.85));
+}
+
+/* Star Number in center of Star */
+.star-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -46%);
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(1.15rem, 2.6vh, 1.8rem);
+  font-weight: 900;
+  color: #723b00;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+/* Star vanishing animation (Keeps layout slot constant without moving others!) */
+.star-cell.picked {
+  animation: disappearStar 0.65s forwards cubic-bezier(0.1, 0.9, 0.2, 1);
+  pointer-events: none;
+}
+
+@keyframes disappearStar {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: brightness(2) drop-shadow(0 0 25px gold);
+  }
+  30% {
+    transform: scale(1.25) rotate(20deg);
+    opacity: 0.9;
+    filter: brightness(3) drop-shadow(0 0 40px #fff);
+  }
+  100% {
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.star-cell.empty-slot {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* ==========================================================================
+   ZOOM REVEAL MODAL (Pure Photo + Back Button, Zero Vertical Overflow)
+   ========================================================================== */
+.reveal-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+.reveal-modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 6, 16, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.modal-box {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(18, 22, 54, 0.94);
+  border: 2px solid rgba(255, 215, 0, 0.45);
+  border-radius: 28px;
+  padding: clamp(14px, 2.5vh, 24px) clamp(20px, 3.5vw, 40px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 215, 0, 0.25);
+  max-height: 94vh;
+  transform: scale(0.7) translateY(20px);
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.25);
+}
+
+.reveal-modal.open .modal-box {
+  transform: scale(1) translateY(0);
+}
+
+.star-pill-number {
+  background: linear-gradient(135deg, #ffd600, #ff8f00);
+  color: #0c0f24;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: clamp(0.95rem, 2vh, 1.2rem);
+  padding: 4px 18px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(255, 214, 0, 0.4);
+  margin-bottom: clamp(10px, 1.8vh, 18px);
+}
+
+/* Photo Frame: Strictly bounded to fit laptop screen without scrolling */
+.photo-frame {
+  width: min(58vh, 420px, 80vw);
+  height: min(58vh, 420px, 80vw);
+  border-radius: 50%;
+  padding: 6px;
+  background: linear-gradient(135deg, #ffd600, #ff4b72, #00e5ff);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 25px rgba(255, 215, 0, 0.35);
+  margin-bottom: clamp(14px, 2.5vh, 22px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ffffff;
+  display: block;
+}
+
+/* Large Prominent Back Button */
+.btn-back {
+  background: var(--green-btn);
+  border: none;
+  color: #05141b;
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(1.1rem, 2.4vh, 1.45rem);
+  font-weight: 900;
+  letter-spacing: 1px;
+  padding: clamp(10px, 1.8vh, 16px) clamp(28px, 4vw, 56px);
+  border-radius: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(0, 230, 118, 0.45);
+  transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(0, 230, 118, 0.65);
+}
+
+.btn-back:active {
+  transform: scale(0.97);
+}
+
+.arrow-icon {
+  font-size: 1.3em;
+  transition: transform 0.2s ease;
+}
+
+.btn-back:hover .arrow-icon {
+  transform: translateX(-4px);
+}
+
+/* ==========================================================================
+   RESULTS MODAL
+   ========================================================================== */
+.results-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+}
+
+.results-modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.results-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 6, 16, 0.85);
+  backdrop-filter: blur(10px);
+}
+
+.results-box {
+  position: relative;
+  z-index: 2;
+  background: #141738;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  width: min(92vw, 720px);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+}
+
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+
+.results-header h3 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.25rem;
+}
+
+.close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background: rgba(255, 75, 114, 0.4);
+}
+
+.results-content {
+  flex: 1;
+  overflow-y: auto;
+  border-radius: 10px;
+  background: rgba(10, 12, 28, 0.5);
+  margin-bottom: 14px;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.results-table th {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  color: #a4b3d6;
+}
+
+.results-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.88rem;
+}
+
+.table-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffd600;
+}
+
+.results-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.copy-btn {
+  background: linear-gradient(135deg, #ffd600, #ff8f00);
+  border: none;
+  color: #0c0f24;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.copy-btn:hover {
+  transform: translateY(-1px);
+}
